@@ -1,0 +1,42 @@
+//Counting Bits // HoneyWell
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+   int n;
+   cin>>n;
+   int count=0;
+   int k=n;
+   while(k>0)
+   {
+       count++;
+       k &= (k-1);
+   }
+   int tot=0;
+   int temp=count;
+   vector<int> v;
+   while(temp)
+   {
+       if(n & (1 << tot))
+       {
+           temp--;
+           v.push_back(tot);
+       }
+       tot++;
+   }
+  
+   reverse(v.begin(),v.end());
+  
+   for(auto itr=v.begin();itr!=v.end();itr++)
+   {
+       *itr=tot-(*itr);
+   }
+   cout<<count<<" ";
+   for(auto x: v)
+   cout<<x<<" ";
+   cout<<"\n";
+   
+   return 0;
+}
