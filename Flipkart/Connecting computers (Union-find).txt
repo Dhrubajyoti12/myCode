@@ -1,0 +1,40 @@
+//connecting computers  // Flipkart // Union-Find or DFS
+int u;
+    void init(int n)
+    {
+        u=n;
+    }
+    int find(int parent[],int i)
+    {
+        if(parent[i]==-1)
+            return i;
+        return find(parent,parent[i]);
+    }
+    void unionfind(int parent[],int x,int y)
+    {
+        int xp=find(parent,x);
+        int yp=find(parent,y);
+        if(xp!=yp)
+        {
+            parent[xp]=yp;
+            u--;
+        }
+        
+    }
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        if(connections.size()<(n-1))
+            return -1;
+        int parent[n];
+        memset(parent,-1,sizeof(parent));
+        init(n);
+        for(int i=0;i<connections.size();i++)
+        {
+            int x=find(parent,connections[i][0]);
+            int y=find(parent,connections[i][1]);
+            if(x==y)
+                continue;
+            else
+                unionfind(parent,x,y);
+        }
+        return u-1;        
+    }
