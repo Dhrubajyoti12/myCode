@@ -1,0 +1,39 @@
+// Wierd Faculty 
+#include <bits/stdc++.h>
+
+using namespace std;
+int getMinimumK(vector<int>& input)
+{
+    int totalZero = 0;
+    for(auto n : input )
+    {
+        if( n == 0 ) ++totalZero;
+    }
+    int totalOne = input.size() - totalZero;
+    if(totalOne<totalZero)
+    return 0;
+    int currZero = 0;
+    int currOne = 0;
+    for( int i=0; i < input.size(); ++i )
+    {
+        if( input[i] == 0 ) ++currZero;
+        if( input[i] == 1 ) ++currOne;
+        
+        int myscore = currOne - currZero;
+        int friendScore = totalOne - currOne - totalZero + currZero;
+        if( myscore > friendScore ) return i+1;
+    }
+    return -1;
+}
+
+int main()
+{
+   int n;
+   cin>>n;
+   vector<int> v(n);
+   for(int i=0;i<n;i++)
+   cin>>v[i];
+  int ans=getMinimumK(v);
+   cout<<ans<<"\n";
+   return 0;
+}

@@ -1,0 +1,21 @@
+// Roll a string // MathWorks
+string findRollOut(string s, long long arr[], int n)
+	{
+	    // Your code goes here
+	    long long brr[n+1]={0};
+	    for(int i=0;i<n;i++)
+	    {
+	        brr[0]+=1;
+	        brr[arr[i]]-=1;
+	    }
+	    for(int i=1;i<n;i++)
+	    brr[i]+=brr[i-1];
+	    for(int i=0;i<n;i++)
+	    {
+	        int l=((s[i]-'a')+brr[i])%26;
+	        char c='a'+l;
+	        s[i]=c;
+	    }
+	    return s;
+	    
+	}
