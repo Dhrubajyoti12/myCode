@@ -1,0 +1,28 @@
+// Binary-tree Camera // Opening Hospitals // Sap-Labs
+class Solution {
+public:
+    int ncamera;
+    pair<bool,bool> fun(TreeNode* root)
+    {
+        if(root==NULL) return {false,true};
+        pair<bool,bool> L=fun(root->left);
+        pair<bool,bool> R=fun(root->right);
+        bool hascam=false;
+        bool monitored=false;
+        if(L.first || R.first)
+            monitored=true;
+        if(!L.second || !R.second)
+        {
+            hascam=true;
+            monitored=true;
+            ncamera++;
+        }
+        return {hascam,monitored};
+    }
+    int minCameraCover(TreeNode* root) {
+        ncamera=0;
+        pair<bool,bool> temp=fun(root);
+        if(!temp.second) ncamera++;
+        return ncamera;
+    }
+};

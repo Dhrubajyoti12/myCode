@@ -1,0 +1,47 @@
+//Longest String Chain // Sap-Lab
+class Solution {
+    vector<vector<int>> adj;
+public:
+    int longest(int v,vector<int>& score)
+    {
+           if(score[v]>0)
+               return score[v];
+       score[v]=1;
+        for(auto b: adj[v])
+        {
+            score[v]=max(score[v],longest(b,score)+1);
+        }
+        return score[v];
+    }
+    int longestStrChain(vector<string>& words) {
+        int n=words.size();
+        unordered_map<string,int> mp;
+        adj.clear();
+        adj.resize(n);
+        for(int i=0;i<n;i++)
+        {
+            mp[words[i]]=i;
+        }
+        for(int i=0;i<n;i++)
+        {
+            string s=words[i];
+            for(int j=0;j<s.length();j++)
+            {
+                string maybe=s.substr(0,j) + s.substr(j+1);
+               auto itr=mp.find(maybe);
+                if(itr!=mp.end())
+                {
+                    adj[itr->second].push_back(i);                   
+                }   
+                
+            }
+        }
+        vector<int> score(n,0);
+        int res=0;
+        for(int i=0;i<n;i++)
+        {
+            res=max(res,longest(i,score));
+        }
+        return res;
+    }
+};

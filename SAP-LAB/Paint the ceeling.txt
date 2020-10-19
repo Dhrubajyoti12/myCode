@@ -1,0 +1,52 @@
+//Paint the ceeling // Sap-Labs
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+   int n,s0,k,b,m;
+   long a;
+   cin>>n>>s0>>k>>b>>m;
+   cin>>a;
+   long prev=s0,res;
+  // cout<<prev<<"\n";
+   vector<long> v;
+   v.push_back(prev);
+   for(int i=1;i<n;i++)
+   {
+       res=(((prev*k)+b)%m)+1+prev;
+       if(res<=a)
+       v.push_back(res);
+       prev=res;
+   }
+   sort(v.begin(),v.end());
+   long ans=0;
+   for(int i=0;i<v.size();i++)
+   {
+       long t=a/v[i];
+       auto pos=lower_bound(v.begin(),v.end(),t);
+       if((pos-v.begin())>=i)
+       {
+           if((pos-v.begin())==i)
+           {
+               if(v[i]*v[i]<=a)
+               ans++;
+           }
+           else if(v[pos-v.begin()]==t)
+           {
+               ans+=(2*((pos-v.begin())-i+1));
+               ans--;
+           }
+           else
+           {
+               ans+=(2*((pos-v.begin())-i));
+               ans--;
+           }
+       }
+       else
+       break;
+   }
+   cout<<ans<<"\n";
+   return 0;
+}

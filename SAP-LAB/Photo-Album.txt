@@ -1,0 +1,40 @@
+//Photo-Album //O(n^2) //Sap Lab
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+   int n;
+   cin>>n;
+   int indx[n],id[n];
+   for(int i=0;i<n;i++)
+   cin>>indx[i];
+   for(int i=0;i<n;i++)
+   cin>>id[i];
+   vector<int> res(n,-1);
+   for(int i=0;i<n;i++)
+   {
+       int x=indx[i];
+       if(res[x]!=-1)
+       {
+           int old=res[x];
+           int next=x+1;
+           while(res[next]!=-1)
+           {
+               int temp=old;
+               old=res[next];
+               res[next]=temp;
+               next+=1;
+           }
+           res[next]=old;
+       }
+       res[x]=id[i];
+   }
+   for(int i=0;i<n;i++)
+   {
+       cout<<res[i]<<" ";
+   }
+   
+   return 0;
+}
