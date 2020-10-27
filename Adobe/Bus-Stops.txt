@@ -1,0 +1,32 @@
+//Bus-Stops //Adobe
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+   int n;
+   cin>>n;
+   int arr[n];
+   int sum=0;
+   for(int i=0;i<n;i++)
+   {
+       cin>>arr[i];
+       sum+=arr[i];
+   }
+   int ans=0;
+   for(int i=0;i<n;i++)
+   {
+       int j=i+1;
+       int temp=arr[i];
+        while(j!=i)
+        {
+            ans=max(ans,min(temp,sum-temp));
+            temp+=arr[j];
+            j=((j+1)%n);
+        }
+   }
+   cout<<ans;
+   
+   return 0;
+}
