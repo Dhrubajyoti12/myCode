@@ -1,0 +1,43 @@
+//Duplicated products //Appdynamics
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+   int n;
+   cin>>n;
+   vector<string> name(n);
+   vector<int> price(n);
+   vector<int> wt(n);
+   for(int i=0;i<n;i++)
+   {
+       cin>>name[i];
+   }
+   for(int i=0;i<n;i++)
+   {
+       cin>>price[i];
+   }
+   for(int i=0;i<n;i++)
+   {
+       cin>>wt[i];
+   }
+   unordered_map<string,int> mp;
+   for(int i=0;i<n;i++)
+   {
+       string s="";
+       s+=name[i];
+       s+=(to_string(price[i]));
+       s+=(to_string(wt[i]));
+       mp[s]++;
+   }
+   int ans=0;
+   for(auto itr=mp.begin();itr!=mp.end();itr++)
+   {
+       if((itr->second)>1)
+       ans+=((itr->second)-1);
+   }
+   cout<<ans;
+   
+   return 0;
+}

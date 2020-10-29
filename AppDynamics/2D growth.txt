@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxgrid(vector<vector<int>> &arr){
+    int n=arr.size();
+    int row=INT_MAX;
+    int col=INT_MAX;
+    for(int i=0;i<n;i++){
+        row=min(row, arr[i][0]);
+        col=min(col, arr[i][1]);
+    }
+    return row*col;
+    
+}
+
+int main() {
+    int n;
+    cin>>n;
+    cin.ignore();
+	vector<vector<int>> arr;
+	for(int i=0;i<n;i++) {
+	    string str;
+	    vector<int> v;
+	    getline(cin,str);
+	    char c=' ';
+	    size_t found=str.find(c);
+	    string s1=str.substr(0,found);
+	    string s2=str.substr(found+1);
+	    int t1=stoi(s1);
+	    int t2=stoi(s2);
+	    v.push_back(t1);
+	    v.push_back(t2);
+	    arr.push_back(v);
+	}
+	cout<<maxgrid(arr)<<endl;
+	return 0;
+}
