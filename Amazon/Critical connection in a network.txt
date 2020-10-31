@@ -1,0 +1,58 @@
+//Critical connection in a network //Amazon
+class Solution {
+public:
+    void helper(vector<int> adj[],bool vis[],int par[],int dis[],int low[],vector<vector<int>>& res,int u)
+    {
+        static int time=0;
+        vis[u]=true;
+        dis[u]=low[u]=++time;
+        for(auto itr=adj[u].begin();itr!=adj[u].end();itr++)
+        {
+            int v=*itr;
+            if(!vis[v])
+            {
+                par[v]=u;
+                helper(adj,vis,par,dis,low,res,v);
+                low[u]=min(low[u],low[v]);
+                if(low[v]>dis[u])
+                {
+                    vector<int> temp;
+                    temp.push_back(u);
+                    temp.push_back(v);
+                    res.push_back(temp);
+                }
+            }
+            else if(v!=par[u])
+            {
+                low[u]=min(low[u],dis[v]);
+            }
+        }
+    }
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector<int> adj[n];
+        int m=connections.size();
+        for(int i=0;i<m;i++)
+        {
+            int x=connections[i][0];
+            int y=connections[i][1];
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+        bool *vis=new bool[n];
+        int *par=new int[n];
+        int *dis=new int[n];
+        int *low=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            vis[i]=false;
+            par[i]=-1;
+        }
+        vector<vector<int>> res;
+        for(int i=0;i<n;i++)
+        {
+            if(!vis[i])
+                helper(adj,vis,par,dis,low,res,i);
+        }
+        return res;
+    }
+};

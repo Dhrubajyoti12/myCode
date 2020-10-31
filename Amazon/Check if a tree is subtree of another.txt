@@ -1,0 +1,26 @@
+//Check if a tree is subtree of another //Amazon
+class Solution {
+public:
+     bool isIdentical(TreeNode* root1, TreeNode* root2){
+        if(root1 == NULL && root2 != NULL)
+            return false;
+        if(root1 != NULL && root2 == NULL)
+            return false;
+        if(root1 == NULL && root2 == NULL)
+            return true;
+        if(root1->val != root2->val)
+            return false;
+        return isIdentical(root1->left,root2->left) && isIdentical(root1->right,root2->right);
+    }
+    bool isSubtree(TreeNode* s, TreeNode* t) {
+        if(s == NULL && t == NULL)
+            return true;
+        if(s == NULL || t == NULL)
+            return false;
+        if(s->val == t->val){
+            if(isIdentical(s->left,t->left) && isIdentical(s->right,t->right))
+                return true;
+        }
+        return isSubtree(s->left,t) || isSubtree(s->right,t);
+        
+    }

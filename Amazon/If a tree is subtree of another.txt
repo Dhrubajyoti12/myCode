@@ -1,0 +1,47 @@
+//If a tree is subtree of another //Amazon
+void storeIN(char arr[],Node* root,int& i)
+{
+    if(root==NULL)
+    {
+        arr[i++]='$';
+        return;
+    }
+    storeIN(arr,root->left,i);
+    arr[i++]=root->data;
+    storeIN(arr,root->right,i);
+}
+void storePRE(char arr[],Node* root,int& j)
+{
+    if(root==NULL)
+    {
+        arr[j++]='$';
+        return;
+    }
+    arr[j++]=root->data;
+    storePRE(arr,root->left,j);
+    storePRE(arr,root->right,j);
+}
+bool isSubTree(Node* T, Node* S) {
+    // Your code here
+    // return 1 if S is subtree of T else 0
+    if(S==NULL)
+    return true;
+    if(T==NULL)
+    return false;
+    char inT[1000000],inS[1000000];
+    int m=0,n=0;
+    storeIN(inT,T,m);
+    storeIN(inS,S,n);
+    inT[m]='\0';
+    inS[n]='\0';
+    if(strstr(inT,inS)==NULL)
+    return false;
+    m=0; n=0;
+    char preT[1000000],preS[1000000];
+    storePRE(preT,T,m);
+    storePRE(preS,S,n);
+    preT[m]='\0';
+    preS[n]='\0';
+    return (strstr(preT,preS)!=NULL);
+    
+}
