@@ -1,0 +1,24 @@
+//Smallest permutation of a given number //Flipkart
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+   long n;
+   cin>>n;
+   string s=to_string(n);
+   int len=s.length();
+   sort(s.begin(),s.end());
+   int i=0;
+   while(i<len && s[i]=='0')
+   i++;
+   if(i==len)
+   cout<<s;
+   else
+   {
+       swap(s[i],s[0]);
+       cout<<s;
+   }
+   return 0;
+}

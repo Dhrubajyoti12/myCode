@@ -1,0 +1,35 @@
+//Maximum level order sum of a tree 
+class Solution {
+public:
+    int maxLevelSum(TreeNode* root) {
+        if(!root->left && !root->right)
+            return 1;
+        queue<TreeNode*> q;
+        q.push(root);
+        int sum=INT_MIN;
+        int res=0;
+        int ans;
+        while(!q.empty())
+        {
+            int n=q.size();
+            int tempsum=0;
+            while(n--)
+            {
+                TreeNode* temp=q.front();
+                q.pop();
+                tempsum+=(temp->val);
+                if(temp->left)
+                    q.push(temp->left);
+                if(temp->right)
+                    q.push(temp->right);                
+            }
+            res++;
+            if(tempsum>sum)
+            {
+                sum=tempsum;
+                ans=res;
+            }
+        }
+        return ans;
+    }
+};

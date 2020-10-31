@@ -1,0 +1,33 @@
+//Merge Intervals //Flipkart
+class Solution {
+public:
+   
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if(intervals.size()==0)
+            return intervals;
+        
+        vector<vector<int>> res;
+        for(int i=0;i<intervals.size();i++)
+            res.push_back(intervals[i]);
+        sort(res.begin(),res.end());
+        int index=0;
+        for(int i=1;i<res.size();i++)
+        {
+            if(res[index][1]>=res[i][0])
+            {
+                
+                res[index][0]=min(res[index][0],res[i][0]);
+                res[index][1]=max(res[index][1],res[i][1]);
+            }
+            else
+            {
+                index++;
+                res[index]=res[i];
+            }
+        }
+       
+        res.erase(res.begin()+index+1,res.end());
+        return res;
+        
+    }
+};
