@@ -1,0 +1,22 @@
+//Power //Flipkart
+#include <bits/stdc++.h>
+using namespace std;
+const long mod=1e9+7;
+
+int power(long s,long n){
+    if(n==0)
+        return 1;
+    long temp=power(s,n/2);
+    if(n%2==0)
+        return temp*temp;
+    else
+        return s*temp*temp;
+}
+int main() {
+long s,n,m;
+cin>>s>>n>>m;
+long a=power(s,n)%10;
+long b=power(a,m)%mod;
+cout<<b<<endl;
+return 0;
+}
