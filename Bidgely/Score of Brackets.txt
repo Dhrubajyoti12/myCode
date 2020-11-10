@@ -1,0 +1,35 @@
+//Score of Brackets //Leetcode
+class Solution {
+public:
+    int scoreOfParentheses(string S) {
+         int n = S.length();
+        
+        stack<int> s;
+        s.push(0);
+        
+        vector<int> dp(n, 0);
+        
+        for(int i = 1; i < n; i++){        
+            if(S[i] == '('){
+                if(S[i-1] == '('){
+                    dp[i] = dp[i-1];
+                }
+                else{
+                    dp[i] = 0;
+                }
+                s.push(i);
+            }
+            else{
+                if(s.top() == i - 1){
+                    dp[i] = (i > 1 ? dp[i-2] : 0) + 1;
+                }
+                else{
+                    dp[i] = (s.top() > 1 ? dp[s.top()-1] : 0) + 2 * dp[i-1]; 
+                }
+                s.pop();
+            }
+        }
+        
+        return dp[n-1];
+    }
+};
