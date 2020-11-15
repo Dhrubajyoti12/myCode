@@ -1,0 +1,83 @@
+//Volatile Roy 
+#include <bits/stdc++.h>
+using namespace std;
+
+
+bool isPrime[] = {0,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1};
+int power[9];
+queue<int> q;
+unordered_map<int,int> mp;
+
+void compute(int x, int y, int curr, int dis)
+{
+    int first = (curr / power[x])% 10;
+    int second = (curr / power[y]) % 10;
+    
+    if(!isPrime[first+second])
+        return;
+    else
+    {
+        curr+= (second-first)*power[x] + (first-second)*power[y];
+       
+        if(mp.find(curr) == mp.end())
+        {
+            mp[curr] = dis + 1;
+            q.push(curr);
+        }
+    }
+}
+
+
+void solve()
+{
+    power[8]=1;
+    for(int i=7;i>=0;i--)
+        power[i] = power[i+1]*10;
+    int number = 123456789;
+    q.push(number);
+    mp[number] = 0;
+    while(!q.empty())
+    {
+        int curr = q.front();
+        q.pop();
+        
+        int prev_dist = mp[curr];
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                if(i<2)
+                    compute(3*i+j,3*(i+1)+j, curr, prev_dist);
+                if(j<2)
+                    compute(3*i+j, 3*i + 1 + j, curr, prev_dist);
+            }
+        }
+        
+        
+        
+    }
+    
+}
+
+
+int main() {
+	// your code goes here
+	int t, x, puzzle;
+	solve();
+	cin>>t;
+	while(t--)
+	{
+	    puzzle = 0;
+	    for(int i=0;i<9;i++)
+	    {
+	        cin>>x;
+	        puzzle = (puzzle*10)+x;
+	    }
+	    if(mp.find(puzzle) == mp.end())
+	        cout<<-1<<endl;
+	    else
+	        cout<<mp[puzzle]<<endl;
+	    
+	}
+	return 0;
+}
