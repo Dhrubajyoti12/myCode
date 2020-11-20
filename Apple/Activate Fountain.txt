@@ -1,0 +1,62 @@
+// Activate Fountain // Flipkart 
+int minTaps(int n, vector<int>& ranges) {
+        int l,r;
+        stack<pair<int,int>> st;
+        for(int i=0;i<=n;i++)
+        {
+            l=max(0,i-ranges[i]);
+            r=min(n,i+ranges[i]);
+            if(st.empty())
+                st.push(make_pair(l,r));
+            else
+            {
+                while(!st.empty())
+                {
+                    auto pa=st.top();
+                    if(l<=pa.first && pa.second<=r)
+                        st.pop();
+                    else
+                        break;
+                }
+                if(st.empty())
+                    st.push(make_pair(l,r));
+                else
+                {
+                    auto pa=st.top();
+                    if(pa.first<=l && r<=pa.second)
+                        continue;
+                    else
+                        st.push({max(l,pa.second),r});
+                }
+            }
+        }
+        int f=1,ans=0;
+        auto pa=st.top();
+        l=pa.first;
+        r=pa.second;
+        st.pop();
+        ans++;
+        while(!st.empty())
+        {
+            auto pa=st.top();
+            st.pop();
+            ans++;
+            if(l>pa.second)
+            {
+                f=0;
+                break;
+            }
+            else
+                l=pa.first;
+        }
+        if(f)
+        {
+            if(l==0 && r==n)
+                return ans;
+            else
+                return -1;
+        }
+        else
+            return -1;        
+        
+    }
