@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int find(int par[],int i)
+{
+    if(par[i]!=i)
+    return par[i]=find(par,par[i]);
+    else
+    return par[i];
+}
+void Union(int par[],int rank[],int x,int y)
+{
+    int xroot=find(par,x);
+    int yroot=find(par,y);
+    if(rank[xroot]!=rank[yroot])
+    {
+        if(rank[xroot]>rank[yroot])
+        par[yroot]=xroot;
+        else
+        par[xroot]=yroot;
+    }
+    else
+    {
+        par[yroot]=xroot;
+        rank[xroot]++;
+    }
+}
+
+void fun(int src[],int dest[],int res[],int n,int q,int k)
+{
+    int parent[n],rank[n];
+    for(int i=0;i<n;i++)
+    {
+        parent[i]=i;
+        rank[i]=0;
+    }
+    for(int x=k+1;x<=n;x++)
+    {
+        for(int y=(2*x);y<=n;y+=x)
+        {
+            Union(parent,rank,y-1,y-x-1);
+        }
+    }
+    for(int i=0;i<q;i++)
+    {
+        if(find(parent,src[i]-1)==find(parent,dest[i]-1))
+        res[i]=1;
+        else
+        res[i]=0;
+    }
+}
+int main()
+{
+   int n,k;
+   cin>>n>>k;
+   int q;
+   cin>>q;
+   int src[q],dest[q];
+   for(int i=0;i<q;i++)
+   {
+       cin>>src[i];
+   }
+   for(int i=0;i<q;i++)
+   {
+       cin>>dest[i];
+   }
+   int res[q];
+   fun(src,dest,res,n,q,k);
+   for(int i=0;i<q;i++)
+   {
+       cout<<res[i]<<" ";
+   }
+   cout<<"\n";
+   return 0;
+}

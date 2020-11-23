@@ -1,0 +1,26 @@
+class Solution {
+//Minimum number of arrows to burst baloons //Leetcode
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(), points.end());
+        int i = 0;
+        int j = 1;
+        int count = 0;
+        while(j < points.size()){
+            if(points[i][1] < points[j][0]){
+                i = j;
+                j++;
+            }
+            else if(points[i][1] <= points[j][1]){
+                count++;
+                j++;
+            }
+            else if(points[i][1] > points[j][1]){
+                i = j;
+                count++;
+                j++;
+            }
+        }
+        return points.size() - count;
+    }
+};
