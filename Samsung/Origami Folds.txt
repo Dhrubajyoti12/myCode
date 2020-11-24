@@ -1,0 +1,54 @@
+//Origami Folds
+#include <bits/stdc++.h>
+using namespace std;
+void origamy(vector<vector<vector<int>>> &arr, int m, int k){
+    while(k>0){
+        for(int i=m-1;i>=m/2;i--){
+            for(int j=0;j<m;j++){
+                //cout<<i<<" "<<j<<" "<<m-i-1<<endl;
+                arr[m-i-1][j].insert(arr[m-i-1][j].end(),arr[i][j].begin(),arr[i][j].end());
+            }
+        }
+        for(int j=m-1;j>=m/2;j--){
+            for(int i=0;i<m/2;i++){
+                //cout<<i<<" "<<j<<" "<<m-j-1<<endl;
+                arr[i][m-j-1].insert(arr[i][m-j-1].end(), arr[i][j].begin(), arr[i][j].end());
+            }
+        }
+        m=m/2;
+        k--;
+    }
+}
+int main() {
+	int k;
+	cin>>k;
+	int n;
+	cin>>n;
+	int m=pow(2,k);
+	vector<vector<vector<int>>> arr(m,vector<vector<int>> (m));
+	int t=1;
+	for(int i=0;i<m;i++){
+	    for(int j=0;j<m;j++)
+	        arr[i][j]={t++};
+	}
+	/*
+	for(int i=0;i<m;i++){
+	    for(int j=0;j<m;j++){
+	        for(auto v: arr[i][j])
+	            cout<<v<<" ";
+	    }
+	    cout<<endl;
+	}*/
+	origamy(arr,m,k);
+	
+	cout<<endl;
+	for(auto v: arr[0][0]){
+	    cout<<v<<" ";
+	}
+	cout<<endl;
+	for(auto it=arr[0][0].rbegin(); it!=arr[0][0].rend() && n>0;it++, n--){
+	    cout<<*it<<" ";
+	}
+	cout<<endl;
+	return 0;
+}
