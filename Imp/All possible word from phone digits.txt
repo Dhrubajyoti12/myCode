@@ -1,0 +1,55 @@
+//All possible word from phone digits
+#include <bits/stdc++.h>
+using namespace std;
+ 
+const char hashTable[10][5]= { "", "", "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz" };
+ 
+void printWordsUtil(int arr[], int curr_digit, vector<char> output, int n,vector<vector<char>>& number)
+{
+    if (curr_digit == n) {
+        number.push_back(output);
+        return;
+    }
+    for (int i = 0; i < (int)strlen(hashTable[arr[curr_digit]]);i++) {
+        output[curr_digit]
+            = hashTable[arr[curr_digit]][i];
+        printWordsUtil(arr, curr_digit + 1, output, n,number);
+        if (arr[curr_digit] == 0 || arr[curr_digit] == 1)
+            return;
+    }
+}
+void printWords(int arr[], int n,vector<vector<char>>& number)
+{
+    vector<char> output(n+1);
+    output[n] = '\0';
+    printWordsUtil(arr, 0, output, n,number);
+}
+char** possibleWord(int arr[],int n,int* row)
+{
+    vector<vector<char>> number;
+    printWords(arr,n,number);
+    *row=number.size();
+    int a=*row;
+    int b=number[0].size();
+    char** p=(char**)malloc(a* sizeof(char*));
+    for(int i=0;i<a;i++)
+    {
+       p[i]=(char*)malloc(b* sizeof(char));
+     }
+    for(int i=0;i<a;i++)
+    {
+       for(int j=0;j<b;j++)
+         p[i][j]=number[i][j];
+     }
+    return p;
+}
+// Driver program
+int main(void)
+{
+    int number[] = { 2, 3, 4 };
+    int n = sizeof(number) / sizeof(number[0]);
+    int ptr;
+    char** x=possibleWord(number, n,&ptr);
+    cout<<ptr;
+    return 0;
+}
