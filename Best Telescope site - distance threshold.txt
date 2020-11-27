@@ -1,0 +1,30 @@
+//Best Telescope site - distance threshold
+class Solution {
+public:
+    int findTheCity(int n, vector<vector<int>>& edges, int distance) {
+         vector<vector<int>> d(n, vector<int>(n, 10005));
+        for(int i=0;i<n;i++) d[i][i] =0;
+        for(auto &vec:edges) 
+            d[vec[0]][vec[1]] = d[vec[1]][vec[0]]  =vec[2];
+        
+        
+        for(int k = 0; k < n; k++) 
+            for(int i = 0; i < n; i++) 
+                for(int j = 0; j < n; j++) 
+                        d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+   
+        vector<int> small;
+        for(int i=0;i<n;i++){
+            int sum =0;
+            for(int j=0;j<n;j++)
+                if(d[i][j]<=distance) sum++;
+            small.emplace_back(sum);
+        }
+        pair<int,int> ma ={n,INT_MAX};
+        for(int i=n-1;i>-1;i--)
+            if(small[i]< ma.second)
+                ma.first = i,ma.second = small[i];
+        
+        return ma.first;
+    }
+};
