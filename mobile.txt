@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    vector<string> a(10,"");
+a[1]="";
+a[0]="";
+a[2]="abc";
+a[3]="def";
+a[4]="ghi";
+a[5]="jkl";
+a[6]="mno";
+a[7]="pqrs";
+a[8]="tuv";
+a[9]="wxyz";
+    int n;
+    cin>>n;
+    int d[n];
+    for(int i=0;i<n;i++)
+        cin>>d[i];
+    string words[]={"abc","gdef"};
+    string s="";
+    for(int i=0;i<n;i++)
+        s+=a[d[i]];
+
+    vector<bool> v(n,true);
+    for(int i=0;i<2;i++)
+    {
+        for(auto &c:words[i])
+        if(s.find(c)==string::npos)
+        {
+            
+            v[i]=false;
+            break;
+        }
+
+    }
+    for(auto z:v)
+        cout<<z<<" ";
+}
